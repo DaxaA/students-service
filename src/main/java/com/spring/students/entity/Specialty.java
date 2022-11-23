@@ -15,17 +15,20 @@ import java.util.List;
 @Table(name = "specialties")
 public class Specialty {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "specialty_id_seq_generator",
+            sequenceName = "specialty_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "specialty_id_seq_generator")
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @OneToMany(mappedBy = "specialty", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "specialty")
     private List<Student> students = new ArrayList<>();
 
     public Specialty(String name, Faculty faculty) {

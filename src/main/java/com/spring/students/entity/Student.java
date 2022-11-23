@@ -13,7 +13,10 @@ import javax.persistence.*;
 @Table(name = "students")
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "student_id_seq_generator",
+            sequenceName = "student_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "student_id_seq_generator")
     private Long id;
     @Column(name = "name")
     private String name;
@@ -24,7 +27,7 @@ public class Student {
     @Column(name = "year")
     private Integer year;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "specialty_id")
     private Specialty specialty;
 
