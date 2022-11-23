@@ -1,12 +1,6 @@
 package com.spring.students.dto;
 
-import com.spring.students.entity.Specialty;
 import lombok.Getter;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Getter
 public class StudentDTO {
