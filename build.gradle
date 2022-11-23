@@ -22,6 +22,5 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
 
-    implementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+    implementation 'org.eclipse.jetty:jetty-server:11.0.12'
 }
