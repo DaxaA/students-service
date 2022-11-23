@@ -1,6 +1,7 @@
 package com.spring.students.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "students")
 public class Student {
     @Id
@@ -25,4 +27,12 @@ public class Student {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "specialty_id")
     private Specialty specialty;
+
+    public Student(String name, String phone, String address, Integer year, Specialty specialty) {
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.year = year;
+        this.specialty = specialty;
+    }
 }
