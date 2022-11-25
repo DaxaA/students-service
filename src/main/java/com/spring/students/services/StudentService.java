@@ -3,6 +3,7 @@ package com.spring.students.services;
 import com.spring.students.dto.student.StudentCreateDTO;
 import com.spring.students.dto.student.StudentDTO;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface StudentService {
@@ -12,5 +13,5 @@ public interface StudentService {
     StudentDTO updateStudent(Long id, StudentCreateDTO student);
     String deleteStudentById(Long id);
     List<StudentDTO> getStudentsBySpecialty(String specialty);
-    Integer report(Integer year);
+    List<Object[]> report() throws IOException;
 }
