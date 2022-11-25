@@ -24,7 +24,7 @@ INSERT INTO "main"."specialties"
 VALUES ('Информатика и вычислительная техника', 1);
 INSERT INTO "main"."specialties"
 ("name", "faculty_id")
-VALUES ('Прикладная математика и информатика', 1);
+VALUES ('Наноэлектроника', 2);
 CREATE TABLE "students" (
     "id"	INTEGER,
     "name"	TEXT NOT NULL,

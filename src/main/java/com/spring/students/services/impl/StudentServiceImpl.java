@@ -8,9 +8,15 @@ import com.spring.students.repositories.StudentRepository;
 import com.spring.students.services.StudentService;
 import com.spring.students.services.mapper.StudentMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -74,7 +80,27 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Integer report(Integer year) {
-        return null;
+    public List<Object[]> report() throws IOException {
+        List<Object[]> data = studentRepository.getCountByYearAndFaculty();
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("info");
+        HSSFRow rowhead = sheet.createRow(0);
+        rowhead.createCell((short) 0).setCellValue("Год");
+        rowhead.createCell((short) 1).setCellValue("Факультет");
+        rowhead.createCell((short) 2).setCellValue("Кол-во поступивших");
+        rowhead.createCell((short) 3).setCellValue("Итого за год");
+        rowhead.createCell((short) 4).setCellValue("Итого поступивших");
+        for (Object[] object: data) {
+            HSSFRow row = sheet.createRow(data.indexOf(object)+1);
+            int colnum = 0;
+            for (Object col: object) {
+                HSSFCell cell = row.createCell(colnum++);
+                cell.setCellValue(col.toString());
+            }
+        }
+        FileOutputStream fileOut = new FileOutputStream("report.xls");
+        workbook.write(fileOut);
+        fileOut.close();
+        return data;
     }
 }
