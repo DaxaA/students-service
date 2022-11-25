@@ -1,18 +1,23 @@
-package com.spring.students.dto;
+package com.spring.students.dto.student;
 
 import lombok.Getter;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
-public class StudentDTO {
-    private final Long id;
+public class StudentCreateDTO {
+    @NotNull
     private final String name;
+    @NotNull
     private final String phone;
+    @NotNull
     private final String address;
+    @NotNull
     private final Integer year;
+    @NotNull
     private final String specialty;
 
-    public StudentDTO(Long id, String name, String phone, String address, Integer year, String specialty) {
-        this.id = id;
+    public StudentCreateDTO(String name, String phone, String address, Integer year, String specialty) {
         this.name = name;
         this.phone = phone;
         this.address = address;

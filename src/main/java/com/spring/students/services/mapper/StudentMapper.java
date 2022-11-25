@@ -1,12 +1,24 @@
 package com.spring.students.services.mapper;
 
-import com.spring.students.dto.StudentCreateDTO;
-import com.spring.students.dto.StudentDTO;
+import com.spring.students.dto.student.StudentDTO;
 import com.spring.students.entity.Student;
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
-public interface StudentMapper {
-    StudentDTO toDto(Student student);
-    StudentCreateDTO toDtoForCreate(Student student);
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
+public class StudentMapper {
+    public StudentDTO toDto(Student student) {
+        return new StudentDTO(
+                student.getId(),
+                student.getName(),
+                student.getPhone(),
+                student.getAddress(),
+                student.getYear(),
+                student.getSpecialty().getName());
+    }
+    public List<StudentDTO> toDtoList(List<Student> students) {
+        return students.stream().map(this::toDto).collect(Collectors.toList());
+    }
 }

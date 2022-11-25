@@ -1,19 +1,14 @@
 package com.spring.students.services;
 
-import com.spring.students.dto.FacultyCreateDTO;
-import com.spring.students.dto.FacultyDTO;
-import com.spring.students.dto.SpecialtyDTO;
-import com.spring.students.entity.Faculty;
-import com.spring.students.entity.Specialty;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.spring.students.dto.faculty.FacultyCreateDTO;
+import com.spring.students.dto.faculty.FacultyDTO;
 
 import java.util.List;
 
 public interface FacultyService {
     FacultyDTO saveFaculty(FacultyCreateDTO faculty);
     List<FacultyDTO> getAllFaculties();
-    List<SpecialtyDTO> getSpecialties(FacultyDTO faculty);
     FacultyDTO getByName(String name);
-    FacultyDTO updateFaculty(FacultyDTO faculty);
+    FacultyDTO updateFaculty(Long id, FacultyCreateDTO faculty);
     String deleteById(Long id);
 }

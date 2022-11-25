@@ -1,11 +1,8 @@
 package com.spring.students.services;
 
-import com.spring.students.dto.FacultyDTO;
-import com.spring.students.dto.SpecialtyCreateDTO;
-import com.spring.students.dto.SpecialtyDTO;
-import com.spring.students.entity.Faculty;
-import com.spring.students.entity.Specialty;
-import com.spring.students.entity.Student;
+import com.spring.students.dto.faculty.FacultyDTO;
+import com.spring.students.dto.specialty.SpecialtyCreateDTO;
+import com.spring.students.dto.specialty.SpecialtyDTO;
 
 import java.util.List;
 
