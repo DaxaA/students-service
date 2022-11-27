@@ -2,10 +2,12 @@ package com.spring.students.services.impl;
 
 import com.spring.students.dto.faculty.FacultyCreateDTO;
 import com.spring.students.dto.faculty.FacultyDTO;
+import com.spring.students.dto.specialty.SpecialtyDTO;
 import com.spring.students.entity.Faculty;
 import com.spring.students.repositories.FacultyRepository;
 import com.spring.students.services.FacultyService;
 import com.spring.students.services.mapper.FacultyMapper;
+import com.spring.students.services.mapper.SpecialtyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class FacultyServiceImpl implements FacultyService{
 
     private final FacultyRepository facultyRepository;
     private final FacultyMapper facultyMapper;
+    private final SpecialtyMapper specialtyMapper;
 
     @Override
     @Transactional
@@ -37,6 +40,11 @@ public class FacultyServiceImpl implements FacultyService{
     @Override
     public FacultyDTO getByName(String name) {
         return facultyMapper.toDto(facultyRepository.findByName(name).orElseThrow(() -> new NoSuchElementException("Faculty not found!")));
+    }
+
+    @Override
+    public List<SpecialtyDTO> getSpecialties(String name) {
+        return specialtyMapper.toDtoList(facultyRepository.findByName(name).orElseThrow().getSpecialties());
     }
 
     @Override
