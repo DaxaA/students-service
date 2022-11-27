@@ -39,10 +39,10 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     }
 
     @Override
-    public List<SpecialtyDTO> getSpecialtyByFaculty(FacultyDTO faculty) {
+    public List<SpecialtyDTO> getSpecialtyByFaculty(String faculty) {
         return specialtyMapper.toDtoList(
                 specialtyRepository.findByFaculty(
-                        facultyRepository.findByName(faculty.getName()).orElseThrow(() -> new NoSuchElementException("Faculty not found!"))));
+                        facultyRepository.findByName(faculty).orElseThrow(() -> new NoSuchElementException("Faculty not found!"))));
     }
 
     @Override
@@ -52,8 +52,8 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 
     @Override
     @Transactional
-    public SpecialtyDTO updateSpecialty(SpecialtyDTO specialty) {
-        Specialty existing = specialtyRepository.findById(specialty.getId()).orElseThrow(() -> new NoSuchElementException("Specialty not found!"));
+    public SpecialtyDTO updateSpecialty(Long id, SpecialtyCreateDTO specialty) {
+        Specialty existing = specialtyRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Specialty not found!"));
         existing.setName(specialty.getName());
         existing.setFaculty(facultyRepository.findByName(specialty.getFaculty()).orElseThrow(() -> new NoSuchElementException("Faculty not found!")));
         return specialtyMapper.toDto(specialtyRepository.saveAndFlush(existing));
