@@ -1,5 +1,6 @@
 package com.spring.students.dto.student;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +18,11 @@ public class StudentCreateDTO {
     @NotNull
     private final String specialty;
 
-    public StudentCreateDTO(String name, String phone, String address, Integer year, String specialty) {
+    public StudentCreateDTO(@JsonProperty("name") String name,
+                            @JsonProperty("phone") String phone,
+                            @JsonProperty("address") String address,
+                            @JsonProperty("year") Integer year,
+                            @JsonProperty("specialty") String specialty) {
         this.name = name;
         this.phone = phone;
         this.address = address;

@@ -42,7 +42,7 @@ public class StudentController {
         return studentService.deleteStudentById(id);
     }
 
-    @GetMapping("/{specialty}")
+    @GetMapping("/specialty/{specialty}")
     public List<StudentDTO> getStudentsBySpecialty(@PathVariable String specialty) {
         return studentService.getStudentsBySpecialty(specialty);
     }

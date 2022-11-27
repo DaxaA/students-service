@@ -19,3 +19,5 @@ spring:
     baseline-on-migrate: true
 server:
   port: 8083
+  servlet:
+    context-path: /students-service

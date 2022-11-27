@@ -2,6 +2,7 @@ package com.spring.students.controllers;
 
 import com.spring.students.dto.faculty.FacultyCreateDTO;
 import com.spring.students.dto.faculty.FacultyDTO;
+import com.spring.students.dto.specialty.SpecialtyDTO;
 import com.spring.students.services.FacultyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,11 @@ public class FacultyController {
         return facultyService.getByName(name);
     }
 
+    @GetMapping("/{name}/specialties")
+    public List<SpecialtyDTO> getSpecialties(@PathVariable String name) {
+        return facultyService.getSpecialties(name);
+    }
+
     @PutMapping("/update/{id}")
     public FacultyDTO updateFaculty(@PathVariable Long id,
                                     @RequestBody FacultyCreateDTO facultyCreateDTO) {
@@ -40,6 +46,5 @@ public class FacultyController {
     public String deleteFaculty(@PathVariable Long id) {
         return facultyService.deleteById(id);
     }
-
 
 }
