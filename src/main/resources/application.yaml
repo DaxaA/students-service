@@ -1,14 +1,14 @@
 spring:
   datasource:
     driverClassName: org.sqlite.JDBC
-    url: jdbc:sqlite:C:/SQLite/students.db
+    url: jdbc:sqlite:students-service.db
     username: rootuser
     password: trust
   jpa:
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.SQLiteDialect
+        dialect: org.sqlite.hibernate.dialect.SQLiteDialect
     hibernate:
       ddl-auto: update
   flyway:
@@ -17,3 +17,13 @@ spring:
     schemas: main
     validate-on-migrate: true
     baseline-on-migrate: true
+  mvc:
+    view:
+      suffix: .html
+    static-path-pattern: /**
+server:
+  port: 8083
+  servlet:
+    context-path: /
+  jetty:
+    max-http-form-post-size: 5000000
