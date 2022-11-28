@@ -10,15 +10,17 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/api/student")
 @RequiredArgsConstructor
 public class StudentController {
 
     private final StudentService studentService;
 
     @GetMapping
-    public List<StudentDTO> getAll() {
-        return studentService.getStudents();
+    public List<StudentDTO> getAll() throws IOException {
+        List<StudentDTO> data = studentService.getStudents();
+        studentService.download(data);
+        return data;
     }
 
     @PostMapping("/new")
@@ -43,12 +45,15 @@ public class StudentController {
     }
 
     @GetMapping("/specialty/{specialty}")
-    public List<StudentDTO> getStudentsBySpecialty(@PathVariable String specialty) {
-        return studentService.getStudentsBySpecialty(specialty);
+    public List<StudentDTO> getStudentsBySpecialty(@PathVariable String specialty) throws IOException {
+        List<StudentDTO> data = studentService.getStudentsBySpecialty(specialty);
+        studentService.download(data);
+        return data;
     }
 
     @GetMapping("/report")
     public List<Object[]> getFullReport() throws IOException {
         return studentService.report();
     }
+
 }

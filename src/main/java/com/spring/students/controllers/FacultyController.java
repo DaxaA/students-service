@@ -4,21 +4,26 @@ import com.spring.students.dto.faculty.FacultyCreateDTO;
 import com.spring.students.dto.faculty.FacultyDTO;
 import com.spring.students.dto.specialty.SpecialtyDTO;
 import com.spring.students.services.FacultyService;
+import com.spring.students.services.SpecialtyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/faculties")
+@RequestMapping("/api/faculty")
 public class FacultyController {
 
     private final FacultyService facultyService;
+    private final SpecialtyService specialtyService;
 
     @GetMapping
-    public List<FacultyDTO> getAll() {
-        return facultyService.getAllFaculties();
+    public List<FacultyDTO> getAll() throws IOException {
+        List<FacultyDTO> data = facultyService.getAllFaculties();
+        facultyService.download(data);
+        return data;
     }
 
     @PostMapping("/new")
@@ -32,8 +37,10 @@ public class FacultyController {
     }
 
     @GetMapping("/{name}/specialties")
-    public List<SpecialtyDTO> getSpecialties(@PathVariable String name) {
-        return facultyService.getSpecialties(name);
+    public List<SpecialtyDTO> getSpecialties(@PathVariable String name) throws IOException {
+        List<SpecialtyDTO> data = facultyService.getSpecialties(name);
+        specialtyService.download(data);
+        return data;
     }
 
     @PutMapping("/update/{id}")
