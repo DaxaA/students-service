@@ -80,6 +80,34 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<StudentDTO> download(List<StudentDTO> data) throws IOException {
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("info");
+        HSSFRow rowhead = sheet.createRow(0);
+        int col = 0;
+        rowhead.createCell(col++).setCellValue("Номер");
+        rowhead.createCell(col++).setCellValue("ФИО");
+        rowhead.createCell(col++).setCellValue("Телефон");
+        rowhead.createCell(col++).setCellValue("Адрес");
+        rowhead.createCell(col++).setCellValue("Год поступления");
+        rowhead.createCell(col++).setCellValue("Специальность");
+        for (StudentDTO student: data) {
+            HSSFRow row = sheet.createRow(data.indexOf(student)+1);
+            col = 0;
+            row.createCell(col++).setCellValue(student.getId());
+            row.createCell(col++).setCellValue(student.getName());
+            row.createCell(col++).setCellValue(student.getPhone());
+            row.createCell(col++).setCellValue(student.getAddress());
+            row.createCell(col++).setCellValue(student.getYear());
+            row.createCell(col++).setCellValue(student.getSpecialty());
+        }
+        FileOutputStream fileOut = new FileOutputStream("students.xls");
+        workbook.write(fileOut);
+        fileOut.close();
+        return data;
+    }
+
+    @Override
     public List<Object[]> report() throws IOException {
         List<Object[]> data = studentRepository.getCountByYearAndFaculty();
         HSSFWorkbook workbook = new HSSFWorkbook();

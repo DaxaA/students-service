@@ -13,5 +13,6 @@ public interface StudentService {
     StudentDTO updateStudent(Long id, StudentCreateDTO student);
     String deleteStudentById(Long id);
     List<StudentDTO> getStudentsBySpecialty(String specialty);
+    List<StudentDTO> download(List<StudentDTO> data) throws IOException;
     List<Object[]> report() throws IOException;
 }
