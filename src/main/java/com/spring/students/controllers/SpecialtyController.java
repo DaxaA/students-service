@@ -6,18 +6,21 @@ import com.spring.students.services.SpecialtyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/specialties")
+@RequestMapping("/api/specialty")
 public class SpecialtyController {
 
     private final SpecialtyService specialtyService;
 
     @GetMapping
-    public List<SpecialtyDTO> getAll() {
-        return specialtyService.getAllSpecialties();
+    public List<SpecialtyDTO> getAll() throws IOException {
+        List<SpecialtyDTO> data = specialtyService.getAllSpecialties();
+        specialtyService.download(data);
+        return data;
     }
 
     @PostMapping("/new")
@@ -31,8 +34,10 @@ public class SpecialtyController {
     }
 
     @GetMapping("/faculty/{faculty}")
-    public List<SpecialtyDTO> getSpecialtyByFaculty(@PathVariable String faculty) {
-        return specialtyService.getSpecialtyByFaculty(faculty);
+    public List<SpecialtyDTO> getSpecialtyByFaculty(@PathVariable String faculty) throws IOException {
+        List<SpecialtyDTO> data = specialtyService.getSpecialtyByFaculty(faculty);
+        specialtyService.download(data);
+        return data;
     }
 
     @PutMapping("/update/{id}")

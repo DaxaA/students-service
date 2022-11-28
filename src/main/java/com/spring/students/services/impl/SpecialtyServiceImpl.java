@@ -1,6 +1,5 @@
 package com.spring.students.services.impl;
 
-import com.spring.students.dto.faculty.FacultyDTO;
 import com.spring.students.dto.specialty.SpecialtyCreateDTO;
 import com.spring.students.dto.specialty.SpecialtyDTO;
 import com.spring.students.entity.Specialty;
@@ -9,9 +8,14 @@ import com.spring.students.repositories.SpecialtyRepository;
 import com.spring.students.services.SpecialtyService;
 import com.spring.students.services.mapper.SpecialtyMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -64,5 +68,27 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     public String deleteById(Long id) {
         specialtyRepository.deleteById(id);
         return "Deleting was successful...";
+    }
+
+    @Override
+    public List<SpecialtyDTO> download(List<SpecialtyDTO> data) throws IOException {
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("info");
+        HSSFRow rowhead = sheet.createRow(0);
+        int col = 0;
+        rowhead.createCell(col++).setCellValue("Номер");
+        rowhead.createCell(col++).setCellValue("Название");
+        rowhead.createCell(col++).setCellValue("Факультет");
+        for (SpecialtyDTO specialty: data) {
+            HSSFRow row = sheet.createRow(data.indexOf(specialty)+1);
+            col = 0;
+            row.createCell(col++).setCellValue(specialty.getId());
+            row.createCell(col++).setCellValue(specialty.getName());
+            row.createCell(col++).setCellValue(specialty.getFaculty());
+        }
+        FileOutputStream fileOut = new FileOutputStream("specialties.xls");
+        workbook.write(fileOut);
+        fileOut.close();
+        return data;
     }
 }
