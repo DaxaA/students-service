@@ -9,9 +9,14 @@ import com.spring.students.services.FacultyService;
 import com.spring.students.services.mapper.FacultyMapper;
 import com.spring.students.services.mapper.SpecialtyMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -60,5 +65,25 @@ public class FacultyServiceImpl implements FacultyService{
     public String deleteById(Long id) {
         facultyRepository.deleteById(id);
         return "Deleting was successful...";
+    }
+
+    @Override
+    public List<FacultyDTO> download(List<FacultyDTO> data) throws IOException {
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet("info");
+        HSSFRow rowhead = sheet.createRow(0);
+        int col = 0;
+        rowhead.createCell(col++).setCellValue("Номер");
+        rowhead.createCell(col++).setCellValue("Название");
+        for (FacultyDTO faculty: data) {
+            HSSFRow row = sheet.createRow(data.indexOf(faculty)+1);
+            col = 0;
+            row.createCell(col++).setCellValue(faculty.getId());
+            row.createCell(col++).setCellValue(faculty.getName());
+        }
+        FileOutputStream fileOut = new FileOutputStream("faculties.xls");
+        workbook.write(fileOut);
+        fileOut.close();
+        return data;
     }
 }
