@@ -16,3 +16,8 @@ out/
 *.class
 
 report.xls
+students.xls
+specialties.xls
+faculties.xls
+
+students-serice.db

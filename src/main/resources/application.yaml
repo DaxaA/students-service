@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: org.sqlite.JDBC
-    url: jdbc:sqlite:C:/SQLite/students.db
+    url: jdbc:sqlite:students-service.db
     username: rootuser
     password: trust
   jpa:
@@ -17,7 +17,13 @@ spring:
     schemas: main
     validate-on-migrate: true
     baseline-on-migrate: true
+  mvc:
+    view:
+      suffix: .html
+    static-path-pattern: /**
 server:
   port: 8083
   servlet:
-    context-path: /students-service
+    context-path: /
+  jetty:
+    max-http-form-post-size: 5000000
